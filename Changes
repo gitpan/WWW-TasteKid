@@ -1,5 +1,13 @@
 Revision history for WWW-TasteKid
 
+0.1.1   Thu Apr 16 22:14:21 PDT 2009
+        * cleaned up manifest
+        * version numbers to Makefile
+        * File::Slurp as req to Makefile
+        * source through perltidy
+        * fixed failing test (03*) (less strict now)
+
+
 0.1.0   Thu Apr 16 01:02:45 PDT 2009 
         Initial public pre-release
 

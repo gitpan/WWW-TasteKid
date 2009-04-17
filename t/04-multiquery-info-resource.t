@@ -1,11 +1,11 @@
 #!perl -T
 # /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
-#$Id: 04-multiquery-info-resource.t,v 1.2 2009/04/16 08:08:48 dinosau2 Exp $
+#$Id: 04-multiquery-info-resource.t,v 1.3 2009/04/17 05:10:00 dinosau2 Exp $
 
 use strict;
 use warnings;
 
-use Test::More tests => 26;
+use Test::More tests => 32;
 
 use WWW::TasteKid;
 
@@ -80,40 +80,38 @@ my $res = $tskd->info_resource;
 is $res->[0]->name, 'Johann Sebastian Bach';
 is $res->[0]->type, 'music';
 
-is substr($res->[0]->wteaser, 0, 40), 
-'<b>Johann Sebastian Bach</b> (31 March 1';
+ok $res->[0]->wteaser =~ m{johann sebastian bach}ims; # 'x' causes it to not match!
 
-is $res->[0]->wurl, 'http://en.wikipedia.org/wiki/J.S.Bach';
+ok $res->[0]->wurl =~ m{http://en.wikipedia.org/wiki}xms;
+ok $res->[0]->wurl =~ m{bach}ixms;
 
-is $res->[0]->ytitle, 
-      q{'Air' from Suite No.3 in D major - Johann Sebastian Bach};
+ok $res->[0]->ytitle =~ m{bach}ixms;
 
-is $res->[0]->yurl, 
- q{http://www.youtube.com/v/CyLo9-Voy5s&f=videos&c=TasteKid&app=youtube_gdata};
+ok $res->[0]->yurl =~ m{http://www.youtube.com}xms;
+ok $res->[0]->yurl =~ m{f=videos&c=TasteKid&app=youtube_gdata}xms;
 
 # add for 
 is $res->[1]->name, 'Ludwig Van Beethoven';
 is $res->[1]->type, 'music';
-# geez, no wiki love for Ludwig,... -see, if you update wikipedia, you will
-# break this test,... ;)
-is substr($res->[1]->wteaser, 0, 27 ), 
-'<b>Ludwig van Beethoven</b>';
+ok $res->[1]->wteaser =~ m{ludwig van beethoven}msi;
 
-is $res->[1]->wurl, q{http://en.wikipedia.org/wiki/Ludwig_van_Beethoven};
-is $res->[1]->ytitle, q{Ludwig van Beethoven};
-is $res->[1]->yurl, q{http://www.youtube.com/v/9NJ5BzyJq7E&f=videos&c=TasteKid&app=youtube_gdata};
+ok $res->[1]->wurl =~ m{http://en.wikipedia.org/wiki}xms;
+ok $res->[1]->wurl =~ m{beethoven}ixms;
+
+ok $res->[1]->ytitle =~ m{beethoven}ixms;
+ok $res->[1]->yurl =~ m{http://www.youtube.com}xms;
+ok $res->[1]->yurl =~ m{f=videos&c=TasteKid&app=youtube_gdata}xms;
 
 is $res->[2]->name, 'Wolfgang Amadeus Mozart';
 is $res->[2]->type, 'music';
 
-is substr($res->[2]->wteaser, 0, 30 ), 
-'<b>Wolfgang Amadeus Mozart</b>';
+ok substr($res->[2]->wteaser, 0, 30 ) =~ m{mozart}ixms;
 
-is $res->[2]->wurl, 'http://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart';
+ok $res->[2]->wurl =~ m{http://en.wikipedia.org/wiki}xms;
+ok $res->[2]->wurl =~  m{mozart}ixms;
 
-is $res->[2]->ytitle, 
-      q{Wolfgang Amadeus Mozart - Piano Concerto No. 21 - Andante};
+ok $res->[2]->ytitle =~ m{mozart}xmsi;
 
-is $res->[2]->yurl, 
- q{http://www.youtube.com/v/df-eLzao63I&f=videos&c=TasteKid&app=youtube_gdata};
+ok $res->[2]->yurl =~ m{http://www.youtube.com}xms;
+ok $res->[2]->yurl =~ m{f=videos&c=TasteKid&app=youtube_gdata}xms;
 

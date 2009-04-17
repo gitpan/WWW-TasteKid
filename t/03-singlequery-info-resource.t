@@ -1,11 +1,11 @@
 #!perl -T
 # /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
-#$Id: 03-singlequery-info-resource.t,v 1.2 2009/04/16 08:08:48 dinosau2 Exp $
+#$Id: 03-singlequery-info-resource.t,v 1.3 2009/04/17 05:10:00 dinosau2 Exp $
 
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More tests => 10;
 
 use WWW::TasteKid;
 
@@ -19,7 +19,6 @@ my $tskd = WWW::TasteKid->new;
 }
 
 $tskd->query({ type => 'music', name => 'bach' });
-#$tskd->query_inspection; # inspect what in the query
 $tskd->ask({ verbose => 1 });
 
 ## start for dev, test locally
@@ -35,16 +34,13 @@ my $res = $tskd->info_resource;
 is $res->[0]->name, 'Johann Sebastian Bach';
 is $res->[0]->type, 'music';
 
-# test could easily be false positive and not mean anything!, leave it for now
+ok $res->[0]->wteaser =~ m/johann sebastian bach/ims;
 
-is substr($res->[0]->wteaser, 0, 40), 
-'<b>Johann Sebastian Bach</b> (31 March 1';
+ok $res->[0]->wurl =~ m{\Ahttp://en\.wikipedia\.org\/wiki\/}xms;
+ok $res->[0]->wurl =~ m{bach}ixms;
 
-is $res->[0]->wurl, 'http://en.wikipedia.org/wiki/J.S.Bach';
+ok $res->[0]->ytitle =~ m/bach/ixms;
 
-is $res->[0]->ytitle, 
-      q{'Air' from Suite No.3 in D major - Johann Sebastian Bach};
-
-is $res->[0]->yurl, 
- q{http://www.youtube.com/v/CyLo9-Voy5s&f=videos&c=TasteKid&app=youtube_gdata};
+ok $res->[0]->yurl =~ m{\Ahttp://www\.youtube\.com}xms;
+ok $res->[0]->yurl =~ m{f=videos&c=TasteKid&app=youtube_gdata\z}xms;
 

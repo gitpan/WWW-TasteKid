@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
-#$Id: examples.pl,v 1.3 2009/04/16 08:08:48 dinosau2 Exp $
+#$Id: examples.pl,v 1.4 2009/04/17 05:10:00 dinosau2 Exp $
 
 ###NOTE: I'm more interested in the music suggestions aspect of these 
 ### results, however, one could persue the movie and book results as well
@@ -38,6 +38,8 @@ $tskd->query({ type => 'music', name => 'type o negative' });
 $tskd->ask({ filter => 'music', verbose => 1 });
 #warn $tskd->get_encoded_query; # inspect whats in the query
 # make sure it's what we put in,...
+#warn $tskd->query_inspection;
+
 
 # get our results
 my $info = $tskd->info_resource;

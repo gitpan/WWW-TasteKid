@@ -1,18 +1,18 @@
 package WWW::TasteKid;
 
-#$Id: TasteKid.pm,v 1.12 2009/04/16 08:19:41 dinosau2 Exp $
+#$Id: TasteKid.pm,v 1.14 2009/04/17 05:18:14 dinosau2 Exp $
 # /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
 
-
-use 5.008001;        # require perl 5.8.1 or later
+use 5.008001;    # require perl 5.8.1 or later
 use warnings;
 use strict;
+
 #use criticism 'brutal';
 
-use version; our $VERSION = qv('0.1.0');
+use version; our $VERSION = qv('0.1.1');
 
 use Readonly;
-use XML::LibXML (); # qw/:libxml/; # :all :libxml, :encoding :w3c
+use XML::LibXML ();    # qw/:libxml/; # :all :libxml, :encoding :w3c
 use Carp qw/croak/;
 use Encode qw/encode/;
 use LWP::Simple qw/get/;
@@ -21,169 +21,164 @@ use Scalar::Util qw/refaddr/;
 use URI::Escape qw/uri_escape/;
 use HTML::Entities qw/decode_entities/;
 use Class::InsideOut qw/public private/;
-                       # should probably be using moose, just seems like
-                       # overkill for a module this simple/small
+
+# should probably be using moose, just seems like
+# overkill for a module this simple/small
 
 use WWW::TasteKidResult;
 
+Readonly my $API_URL => 'http://www.tastekid.com/ask/ws?q=';
 
-Readonly my $API_URL       => 'http://www.tastekid.com/ask/ws?q=';
-
-private    query_store         => my %query_store;
-public     set_xml_result      => my %xml_result;
-public     get_xml_result      => %xml_result;
-public     get_encoded_query   => my %encoded_query;
-
+private query_store      => my %query_store;
+public set_xml_result    => my %xml_result;
+public get_xml_result    => %xml_result;
+public get_encoded_query => my %encoded_query;
 
 sub new {
     my $class = shift;
-    my $self = bless \do {my $s}, $class;
+    my $self = bless \do { my $s }, $class;
 
     Class::InsideOut::register($self);
 
-    $xml_result{ refaddr $self } = undef;
+    $xml_result{ refaddr $self }    = undef;
     $encoded_query{ refaddr $self } = undef;
-    $query_store{ refaddr $self } = undef;
+    $query_store{ refaddr $self }   = undef;
 
     return $self;
 }
 
-
 sub query {
-  my ($self, $arg_ref) = @_;
+    my ( $self, $arg_ref ) = @_;
 
-  if (! $arg_ref->{'name'} ) {
-    croak 'name argument is mandatory';
-  }
+    if ( !$arg_ref->{'name'} ) {
+        croak 'name argument is mandatory';
+    }
 
-  if (! exists $query_store{'query'} ) {
-      $query_store{'query'} = [];
-  }
+    if ( !exists $query_store{'query'} ) {
+        $query_store{'query'} = [];
+    }
 
-  push @{ $query_store{'query'} }, $arg_ref;
+    push @{ $query_store{'query'} }, $arg_ref;
 
-  return;
+    return;
 }
 
 sub query_inspection {
-  print {Dumper} $query_store{'query'};
+    print Dumper $query_store{'query'};
 }
 
 sub ask {
-  my ($self, $arg_ref) = @_;
+    my ( $self, $arg_ref ) = @_;
 
-  my $query_str = q{};
-  foreach my $q ( @{ $query_store{'query'} } ) {
-      my $t =  $q->{'type'} || q{};
-      my $n =  $q->{'name'} || q{};
+    my $query_str = q{};
+    foreach my $q ( @{ $query_store{'query'} } ) {
+        my $t = $q->{'type'} || q{};
+        my $n = $q->{'name'} || q{};
 
-      if ( $t ) {
-        $query_str .= "$t:";
-      }
+        if ($t) {
+            $query_str .= "$t:";
+        }
 
-      if ( $n ) {
-        $query_str .= "$n,";
-      }
-  }
-  # purge queries list
-  delete $query_store{ refaddr $self };
+        if ($n) {
+            $query_str .= "$n,";
+        }
+    }
 
-  $query_str =~ s/\,\z//xms;
+    # purge queries list
+    delete $query_store{ refaddr $self };
 
-  my $query = $API_URL . uri_escape($query_str);
+    $query_str =~ s/\,\z//xms;
 
-  if ( $arg_ref->{'filter'} ) { $query .= "//$arg_ref->{'filter'}" };
-  if ( $arg_ref->{'verbose'} ) { $query .= '&verbose=1' };
+    my $query = $API_URL . uri_escape($query_str);
 
-  $encoded_query{ refaddr $self } = $query;
+    if ( $arg_ref->{'filter'} )  { $query .= "//$arg_ref->{'filter'}" }
+    if ( $arg_ref->{'verbose'} ) { $query .= '&verbose=1' }
 
-  my $r = get($query);
+    $encoded_query{ refaddr $self } = $query;
 
-  if (! $r) { croak qq{unable to get $query} };
+    my $r = get($query);
 
-  $self->set_xml_result($r);
+    if ( !$r ) { croak qq{unable to get $query} }
 
-  return;
+    $self->set_xml_result($r);
+
+    return;
 
 }
-
 
 sub info_resource {
-  my ($self) = @_;
-  return $self->_common_resource('info');
+    my ($self) = @_;
+    return $self->_common_resource('info');
 }
-
 
 sub results_resource {
-  my ($self) = @_;
-  return $self->_common_resource('results');
+    my ($self) = @_;
+    return $self->_common_resource('results');
 }
-
 
 sub _common_resource {
-  my ($self, $elem) = @_;
+    my ( $self, $elem ) = @_;
 
-  if ( caller ne 'WWW::TasteKid' ){ croak 'private method'; }
+    if ( caller ne 'WWW::TasteKid' ) { croak 'private method'; }
 
-  my @return_req = ();
+    my @return_req = ();
 
-  my $parser = XML::LibXML->new();
+    my $parser = XML::LibXML->new();
 
-  my $tstkd_xml = $parser->parse_string($self->get_xml_result);
+    my $tstkd_xml = $parser->parse_string( $self->get_xml_result );
 
-  my $xml_root = $tstkd_xml->documentElement;
+    my $xml_root = $tstkd_xml->documentElement;
 
-  if ( ! $xml_root
-      || $xml_root->nodeName ne 'similar' ) {
-      croak 'unknown file format recieved, cannot continue';
-  }
+    if (  !$xml_root
+        || $xml_root->nodeName ne 'similar' )
+    {
+        croak 'unknown file format recieved, cannot continue';
+    }
 
-  return _parse_response($xml_root, $elem);
+    return _parse_response( $xml_root, $elem );
 }
 
-
 sub _parse_response {
-  my ($xml_root, $elem) = @_;
+    my ( $xml_root, $elem ) = @_;
 
-  if ( caller ne 'WWW::TasteKid' ){ croak 'private method'; }
+    if ( caller ne 'WWW::TasteKid' ) { croak 'private method'; }
 
-  my $results_ref = [];
+    my $results_ref = [];
 
-  #TODO 3 nested foreach?! geez, refactor me
-  foreach my $node ($xml_root->childNodes) {
-      #warn $node->toString;
+    #TODO 3 nested foreach?! geez, refactor me
+    foreach my $node ( $xml_root->childNodes ) {
 
-      #next unless $node->nodeName eq $elem;
-      if ($node->nodeName ne $elem) { next };
+        #warn $node->toString;
 
-      foreach my $c_node ($node->childNodes) {
-          if ( $c_node->nodeName eq 'resource' ) {
+        #next unless $node->nodeName eq $elem;
+        if ( $node->nodeName ne $elem ) { next }
 
-              my $tkr = WWW::TasteKidResult->new;
-              foreach my $cc_node ( $c_node->childNodes ) {
+        foreach my $c_node ( $node->childNodes ) {
+            if ( $c_node->nodeName eq 'resource' ) {
 
-                  #next unless $tkr->can( lc $cc_node->nodeName );
-                  if (! $tkr->can( lc $cc_node->nodeName ) ) {next};
+                my $tkr = WWW::TasteKidResult->new;
+                foreach my $cc_node ( $c_node->childNodes ) {
 
-                  my $text_content = $cc_node->textContent;
-                  $text_content = encode('utf8', $text_content);
+                    #next unless $tkr->can( lc $cc_node->nodeName );
+                    if ( !$tkr->can( lc $cc_node->nodeName ) ) { next }
 
-                  $text_content = decode_entities($text_content);
+                    my $text_content = $cc_node->textContent;
+                    $text_content = encode( 'utf8', $text_content );
 
+                    $text_content = decode_entities($text_content);
 
-                  my $method_name = lc $cc_node->nodeName;
-                  $tkr->$method_name( $text_content );
+                    my $method_name = lc $cc_node->nodeName;
+                    $tkr->$method_name($text_content);
 
-              }
-              push @{$results_ref}, $tkr;
-          }
-      }
-  }
-  return $results_ref;
+                }
+                push @{$results_ref}, $tkr;
+            }
+        }
+    }
+    return $results_ref;
 }
 
 1;
-
 
 __END__
 
@@ -193,7 +188,7 @@ WWW::TasteKid - A Perl interface to the API of TasteKid.com
 
 =head1 VERSION
 
-Version 0.1.0
+Version 0.1.1
 
 
 =head1 SYNOPSIS

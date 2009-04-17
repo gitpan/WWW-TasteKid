@@ -1,53 +1,56 @@
 package WWW::TasteKidResult;
-# /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
-#$Id: TasteKidResult.pm,v 1.6 2009/04/16 08:19:41 dinosau2 Exp $
 
-use 5.008001;        # require perl 5.8.1 or later
+# /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
+#$Id: TasteKidResult.pm,v 1.8 2009/04/17 05:18:14 dinosau2 Exp $
+
+use 5.008001;    # require perl 5.8.1 or later
 
 use warnings;
 use strict;
+
 #use criticism 'brutal';
 
-use version; our $VERSION = qv('0.1.0');
+use version; our $VERSION = qv('0.1.1');
 
 use Carp qw/croak/;
 use Data::Dumper qw/Dumper/;
 use Scalar::Util qw/refaddr/;
 use Class::InsideOut qw/public/;
-                       # should probably be using moose, just seems like
-                       # overkill for a module this simple/small
 
-public    name      => my %name;
-public    type      => my %type;
-public    wteaser   => my %wteaser;
-public    wurl      => my %wurl;
-public    ytitle    => my %ytitle;
-public    yurl      => my %yurl;
+# should probably be using moose, just seems like
+# overkill for a module this simple/small
+
+public name    => my %name;
+public type    => my %type;
+public wteaser => my %wteaser;
+public wurl    => my %wurl;
+public ytitle  => my %ytitle;
+public yurl    => my %yurl;
 
 sub new {
     my $class = shift;
-    my $self = bless \do {my $s}, $class;
+    my $self = bless \do { my $s }, $class;
 
     Class::InsideOut::register($self);
 
-    $name{ refaddr $self } = undef;
-    $type{ refaddr $self } = undef;
+    $name{ refaddr $self }    = undef;
+    $type{ refaddr $self }    = undef;
     $wteaser{ refaddr $self } = undef;
-    $wurl{ refaddr $self } = undef;
-    $ytitle{ refaddr $self } = undef;
-    $yurl{ refaddr $self } = undef;
+    $wurl{ refaddr $self }    = undef;
+    $ytitle{ refaddr $self }  = undef;
+    $yurl{ refaddr $self }    = undef;
 
     return $self;
 }
 
 sub inspect_result_object {
-  print {Dumper} \%name;
-  print {Dumper} \%type;
-  print {Dumper} \%wteaser;
-  print {Dumper} \%wurl;
-  print {Dumper} \%ytitle;
-  print {Dumper} \%yurl;
-  return;
+    print Dumper \%name;
+    print Dumper \%type;
+    print Dumper \%wteaser;
+    print Dumper \%wurl;
+    print Dumper \%ytitle;
+    print Dumper \%yurl;
+    return;
 }
 
 1;
@@ -60,7 +63,7 @@ WWW::TasteKidResult - An object encapsulating a reponse from the TasteKid API
 
 =head1 VERSION
 
-Version 0.1.0
+Version 0.1.1
 
 =head1 SYNOPSIS
 
