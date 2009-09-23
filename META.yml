@@ -1,0 +1,32 @@
+--- #YAML:1.0
+name:               WWW-TasteKid
+version:            0.1.2
+abstract:           A Perl interface to the API of TasteKid.com
+author:
+    - David Wright <david_v_wright@yahoo.com>
+license:            unknown
+distribution_type:  module
+configure_requires:
+    ExtUtils::MakeMaker:  0
+requires:
+    Carp:              1.08
+    Class::InsideOut:  1.09
+    Data::Dumper:      2.121
+    Encode:            2.23
+    HTML::Entities:    1.35
+    LWP::Simple:       5.81
+    Readonly:          1.03
+    Scalar::Util:      1.19
+    Test::More:        0.8
+    URI:               1.37
+    URI::Escape:       3.28
+    XML::LibXML:       1.66
+    XML::Simple:       2.18
+no_index:
+    directory:
+        - t
+        - inc
+generated_by:       ExtUtils::MakeMaker version 6.48
+meta-spec:
+    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:  1.4

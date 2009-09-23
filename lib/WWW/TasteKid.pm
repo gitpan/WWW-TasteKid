@@ -1,6 +1,6 @@
 package WWW::TasteKid;
 
-#$Id: TasteKid.pm,v 1.14 2009/04/17 05:18:14 dinosau2 Exp $
+#$Id: TasteKid.pm,v 1.16 2009/09/23 06:12:10 dinosau2 Exp $
 # /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
 
 use 5.008001;    # require perl 5.8.1 or later
@@ -9,7 +9,7 @@ use strict;
 
 #use criticism 'brutal';
 
-use version; our $VERSION = qv('0.1.1');
+use version; our $VERSION = qv('0.1.2');
 
 use Readonly;
 use XML::LibXML ();    # qw/:libxml/; # :all :libxml, :encoding :w3c
@@ -188,7 +188,7 @@ WWW::TasteKid - A Perl interface to the API of TasteKid.com
 
 =head1 VERSION
 
-Version 0.1.1
+Version 0.1.2
 
 
 =head1 SYNOPSIS
@@ -564,8 +564,6 @@ L<criticism> (pragma - enforce Perl::Critic if installed)
 L<version>(pragma - version numbers)
 
 L<Test::More>
-
-L<File::Slurp>
 
 L<File::Basename>
 

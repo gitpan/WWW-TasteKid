@@ -20,3 +20,4 @@ t/data/bach_beethoven_mozart_verbose.xml
 t/data/bach_verbose.xml
 t/pod-coverage.t
 t/pod.t
+META.yml                                 Module meta-data (added by MakeMaker)

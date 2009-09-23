@@ -1,5 +1,11 @@
 Revision history for WWW-TasteKid
 
+0.1.2   Tue Sep 22 23:17:38 PDT 2009
+        * cleaned up sloppy false positive test cases
+        * removed File::Slurp as req
+        * added XML::Simple as req to Makefile
+
+
 0.1.1   Thu Apr 16 22:14:21 PDT 2009
         * cleaned up manifest
         * version numbers to Makefile

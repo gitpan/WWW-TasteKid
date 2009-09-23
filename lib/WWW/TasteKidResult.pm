@@ -1,7 +1,7 @@
 package WWW::TasteKidResult;
 
 # /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
-#$Id: TasteKidResult.pm,v 1.8 2009/04/17 05:18:14 dinosau2 Exp $
+#$Id: TasteKidResult.pm,v 1.9 2009/09/23 06:12:10 dinosau2 Exp $
 
 use 5.008001;    # require perl 5.8.1 or later
 
@@ -10,7 +10,7 @@ use strict;
 
 #use criticism 'brutal';
 
-use version; our $VERSION = qv('0.1.1');
+use version; our $VERSION = qv('0.1.2');
 
 use Carp qw/croak/;
 use Data::Dumper qw/Dumper/;
@@ -63,7 +63,7 @@ WWW::TasteKidResult - An object encapsulating a reponse from the TasteKid API
 
 =head1 VERSION
 
-Version 0.1.1
+Version 0.1.2
 
 =head1 SYNOPSIS
 

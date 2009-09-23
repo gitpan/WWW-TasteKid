@@ -15,11 +15,13 @@ WriteMakefile(
         'LWP::Simple'      => 5.810,
         'Data::Dumper'     => 2.121,
         'Scalar::Util'     => 1.19,
+        'URI'              => 1.37,
         'URI::Escape'      => 3.28,
         'HTML::Entities'   => 1.35,
         'Class::InsideOut' => 1.09,
         'Carp'             => 1.08,
-        'File::Slurp'      => 9999.12
+        #'File::Slurp'      => 9999.12, was used in a test
+        'XML::Simple'      => 2.18,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'WWW-TasteKid*' },
