@@ -1,7 +1,7 @@
 package WWW::TasteKidResult;
 
 # /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
-#$Id: TasteKidResult.pm,v 1.9 2009/09/23 06:12:10 dinosau2 Exp $
+#$Id$
 
 use 5.008001;    # require perl 5.8.1 or later
 

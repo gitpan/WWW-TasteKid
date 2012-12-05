@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
-#$Id: examples.pl,v 1.4 2009/04/17 05:10:00 dinosau2 Exp $
+#$Id$
 
 ###NOTE: I'm more interested in the music suggestions aspect of these 
 ### results, however, one could persue the movie and book results as well

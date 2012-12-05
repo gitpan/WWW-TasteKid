@@ -7,6 +7,7 @@ WriteMakefile(
     AUTHOR              => 'David Wright <david_v_wright@yahoo.com>',
     VERSION_FROM        => 'lib/WWW/TasteKid.pm',
     ABSTRACT_FROM       => 'lib/WWW/TasteKid.pm',
+    LICENSE             => 'perl, gpl',
     PREREQ_PM => {
         'Test::More'       => 0.8,
         'Readonly'         => 1.03,
@@ -22,6 +23,7 @@ WriteMakefile(
         'Carp'             => 1.08,
         #'File::Slurp'      => 9999.12, was used in a test
         'XML::Simple'      => 2.18,
+        'version'          => 0.74
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'WWW-TasteKid*' },

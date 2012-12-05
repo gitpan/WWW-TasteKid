@@ -12,4 +12,4 @@ BEGIN {
     use_ok( 'WWW::TasteKid' );
 }
 
-diag( "Testing WWW::TasteKid $WWW::TasteKid::VERSION, Perl $], $^X" );
+#diag( "Testing WWW::TasteKid $WWW::TasteKid::VERSION, Perl $], $^X" );

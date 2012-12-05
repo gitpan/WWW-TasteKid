@@ -1,6 +1,6 @@
 package WWW::TasteKid;
 
-#$Id: TasteKid.pm,v 1.16 2009/09/23 06:12:10 dinosau2 Exp $
+#$Id$
 # /* vim:et: set ts=4 sw=4 sts=4 tw=78: */
 
 use 5.008001;    # require perl 5.8.1 or later
@@ -9,7 +9,7 @@ use strict;
 
 #use criticism 'brutal';
 
-use version; our $VERSION = qv('0.1.2');
+use version; our $VERSION = qv('0.1.3');
 
 use Readonly;
 use XML::LibXML ();    # qw/:libxml/; # :all :libxml, :encoding :w3c
@@ -188,10 +188,13 @@ WWW::TasteKid - A Perl interface to the API of TasteKid.com
 
 =head1 VERSION
 
-Version 0.1.2
+Version 0.1.3
 
 
 =head1 SYNOPSIS
+
+    NOTE: Their terms of service have changed you need to send them a 
+    API use request first: http://www.tastekid.com/ask/page/api_request
 
     use WWW::TasteKid;
 
@@ -230,7 +233,6 @@ Version 0.1.2
     Maurice Ravel
     Olivier Messiaen
     Sergei Prokofiev
-
 
 =head1 DESCRIPTION
 
